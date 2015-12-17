@@ -115,7 +115,8 @@ sub assert_and_click($;$$$$) {
     # We can't just move the mouse, or we end up in a click-and-drag situation
     sleep 1;
     # move mouse back to where it was before we clicked
-    mouse_set($old_mouse_coords->{'x'}, $old_mouse_coords->{'y'});
+    # comment for deepin control center
+    # mouse_set($old_mouse_coords->{'x'}, $old_mouse_coords->{'y'});
 }
 
 sub assert_and_dclick($;$$$) {

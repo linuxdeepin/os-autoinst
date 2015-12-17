@@ -540,6 +540,7 @@ my $keymap_x11 = {
     'pgdn'      => 0xff56,
     'sysrq'     => 0xff15,
     'super'     => 0xffeb,     # left, right is ec
+    'win'       => 0xffec,
 };
 
 sub init_x11_keymap {
