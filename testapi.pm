@@ -16,7 +16,7 @@ our @EXPORT = qw($realname $username $password $serialdev %cmd %vars send_key se
   type_password get_var check_var set_var become_root x11_start_program ensure_installed
   autoinst_url script_output validate_script_output eject_cd power upload_asset upload_image
   activate_console select_console console deactivate_console data_url assert_shutdown parse_junit_log
-  assert_script_run assert_script_sudo match_has_tag get_var_array check_var_array
+  assert_script_run assert_script_sudo match_has_tag get_var_array check_var_array assert_and_hover
 );
 
 our %cmd;
@@ -121,6 +121,24 @@ sub assert_and_click($;$$$$) {
 
 sub assert_and_dclick($;$$$) {
     assert_and_click($_[0], $_[1], $_[2], $_[3], 1);
+}
+
+sub assert_and_hover($;$) {
+    my $foundneedle = bmwqemu::assert_screen(
+        mustmatch => $_[0],
+        timeout   => $_[1]
+    );
+
+    bmwqemu::fctlog( 'assert_and_hover', ["mustmatch", $_[0]], ["timeout", $_[1]] );
+
+    # foundneedle has to be set, or the assert is buggy :)
+    my $lastarea = $foundneedle->{'area'}->[-1];
+    my $rx = 1;                                                   # $origx / $img->xres();
+    my $ry = 1;                                                   # $origy / $img->yres();
+    my $x  = int(( $lastarea->{'x'} + $lastarea->{'w'} / 2 ) * $rx);
+    my $y  = int(( $lastarea->{'y'} + $lastarea->{'h'} / 2 ) * $ry);
+    bmwqemu::diag("mouse hover at $x/$y");
+    mouse_set( $x, $y );
 }
 
 =head2 wait_idle
