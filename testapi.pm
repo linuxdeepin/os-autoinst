@@ -129,7 +129,7 @@ sub assert_and_hover($;$) {
         timeout   => $_[1]
     );
 
-    bmwqemu::fctlog( 'assert_and_hover', ["mustmatch", $_[0]], ["timeout", $_[1]] );
+    bmwqemu::log_call( 'assert_and_hover', ["mustmatch", $_[0]], ["timeout", $_[1]] );
 
     # foundneedle has to be set, or the assert is buggy :)
     my $lastarea = $foundneedle->{'area'}->[-1];
